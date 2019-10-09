@@ -16,11 +16,12 @@ export interface ApiResponse {
 export interface UserEntity {
     id: number;
     name: string;
-    email: string;
+    username: string;
 }
 
 export interface OkrEntity {
-    id: number;
+    id?: number;
+    ownerId: number;
     owner: string;
     title: string;
     obj: string;

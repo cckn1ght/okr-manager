@@ -3,10 +3,10 @@ import './App.scss';
 import {
     Route,
     withRouter,
-    Switch, RouteComponentProps
+    Switch, RouteComponentProps, Redirect
 } from 'react-router-dom';
 
-import {ACCESS_TOKEN} from '../constants';
+import {ACCESS_TOKEN, APP_NAME} from '../constants';
 
 import Login from '../user/login/Login';
 import Signup from '../user/signup/Signup';
@@ -18,6 +18,9 @@ import {Layout, notification} from 'antd';
 import {UserEntity} from "../constants/payload";
 import {getCurrentUser} from "../util/UserApi";
 import {OkrView} from "../okr_view";
+import {OkrAdder} from "../okr_view/OkrAdder";
+import {PrivateRoute} from "../common/PrivateRoute";
+import {UserList} from "../user/user_list/UserList";
 
 const {Content} = Layout;
 
@@ -28,7 +31,7 @@ const App: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
     //     isLoading: false
     // }
     const [isLoading, setIsLoading] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem(ACCESS_TOKEN));
     const [currentUser, setCurrentUser] = useState<UserEntity | null>(null);
     const [needLoadUser, setNeedLoadUser] = useState(false);
 
@@ -62,14 +65,14 @@ const App: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
         props.history.push(redirectTo);
 
         notification[notificationType]({
-            message: 'Polling App',
+            message: APP_NAME,
             description: description,
         });
     };
 
     const handleLogin = () => {
         notification.success({
-            message: 'Polling App',
+            message: APP_NAME,
             description: "You're successfully logged in.",
         });
         setNeedLoadUser(prev => !prev);
@@ -87,9 +90,27 @@ const App: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
             <Content className="app-content">
                 <div className="container">
                     <Switch>
-                        <Route exact path="/">
-                            <OkrView currentUser={currentUser}/>
-                        </Route>
+                        <PrivateRoute exact path="/" authenticated={isAuthenticated}>
+                            {
+                                currentUser &&
+                                <Redirect to={`/okr/${currentUser.id}`}/>
+                            }
+                        </PrivateRoute>
+                        <PrivateRoute exact path="/okr/:user_id" authenticated={isAuthenticated}>
+                            {
+                                currentUser &&
+                                <OkrView currentUser={currentUser} />
+                            }
+                        </PrivateRoute>
+                        <PrivateRoute exact path="/okr_adder" authenticated={isAuthenticated}>
+                            {
+                                currentUser &&
+                                <OkrAdder currentUser={currentUser}/>
+                            }
+                        </PrivateRoute>
+                        <PrivateRoute exact path="/user_list/:page" authenticated={isAuthenticated}>
+                            <UserList />
+                        </PrivateRoute>
                         <Route path="/login">
                             <Login onLogin={handleLogin} />
                         </Route>
@@ -106,6 +127,6 @@ const App: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
             </Content>
         </Layout>
     );
-}
+};
 
 export default withRouter(App);

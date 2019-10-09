@@ -1148,13 +1148,13 @@ You may also narrow down matches using `*` and/or `**`, to match the path exactl
 {
   // ...
   "proxy": {
-    // Matches any request starting with /api
+    api
     "/api": {
       "target": "<url_1>",
       "ws": true
       // ...
     },
-    // Matches any request starting with /foo
+    api
     "/foo": {
       "target": "<url_2>",
       "ssl": true,

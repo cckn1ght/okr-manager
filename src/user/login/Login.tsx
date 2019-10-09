@@ -16,7 +16,7 @@ interface LoginProps extends FormComponentProps {
 
 const createReq = (values: any) => {
     const req: LoginRequest = {
-        email: values["email"],
+        email: values["username"],
         password: values["password"]
     };
     return req;
@@ -55,7 +55,7 @@ const Login = (props: LoginProps) => {
             <div className="login-content">
                 <Form onSubmit={handleSubmit} className="login-form">
                     <FormItem>
-                        {getFieldDecorator('email', {
+                        {getFieldDecorator('username', {
                             rules: [{required: true, message: 'Please input your email!'}],
                         })(
                             <Input

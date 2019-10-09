@@ -38,6 +38,11 @@ const AppHeader: React.FC<RouteComponentProps & AppHeaderProps> =
                         <Icon type="home" className="nav-icon"/>
                     </Link>
                 </Menu.Item>,
+                <Menu.Item key="/user_list">
+                    <Link to="/user_list/1">
+                        <Icon type="usergroup-delete" className="nav-icon" />
+                    </Link>
+                </Menu.Item>,
                 <Menu.Item key="/profile" className="profile-menu">
                     <ProfileDropdownMenu
                         currentUser={currentUser}
@@ -82,13 +87,13 @@ const ProfileDropdownMenu: React.FC<ProfileProps> = (props: ProfileProps) => {
                     {props.currentUser.name}
                 </div>
                 <div className="username-info">
-                    @{props.currentUser.email}
+                    {props.currentUser.username}
                 </div>
             </Menu.Item>
             <Menu.Divider/>
-            <Menu.Item key="profile" className="dropdown-item">
-                <Link to={`/users/${props.currentUser.email}`}>Profile</Link>
-            </Menu.Item>
+            {/*<Menu.Item key="profile" className="dropdown-item">*/}
+            {/*    <Link to={`/users/${props.currentUser.email}`}>Profile</Link>*/}
+            {/*</Menu.Item>*/}
             <Menu.Item key="logout" className="dropdown-item">
                 Logout
             </Menu.Item>

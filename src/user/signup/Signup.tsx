@@ -13,9 +13,9 @@ const FormItem = Form.Item;
 const createReq = (values: any) => {
     const signupRequest: SignUpRequest = {
         name: values["name"],
-        email: values["email"],
+        email: values["username"],
         password: values["password"]
-    }
+    };
     return signupRequest;
 };
 const Signup = (props: FormComponentProps & RouteComponentProps) => {
@@ -68,7 +68,7 @@ const Signup = (props: FormComponentProps & RouteComponentProps) => {
                         )}
                     </FormItem>
                     <FormItem label="Email" hasFeedback>
-                        {getFieldDecorator('email', {
+                        {getFieldDecorator('username', {
                             rules: [{ required: true, message: 'Please input your email!' }],
                         })(
                             <Input
