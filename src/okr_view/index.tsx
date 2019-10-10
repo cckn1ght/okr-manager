@@ -52,13 +52,13 @@ export const OkrView: React.FC<CurrentUserProps> = (props: CurrentUserProps) => 
                 <Skeleton active={true} paragraph={{rows: 4}}/>  :
                 okrs.map(okr => (
                 <div key={okr.id!}>
-                    <OkrDetail okr={okr} onDelete={() => deleteOkr(okr.id!)} showDelete={isOwner} />
+                    <OkrDetail okr={okr} onDelete={() => deleteOkr(okr.id!)} isOwner={isOwner} />
                     <Divider dashed/>
                 </div>
             ))}
             {
                 isOwner &&
-                <Link to="/okr_adder">
+                <Link to="/user/okr_adder">
                     <Button type="primary" style={{margin: "auto", display: "block", marginBottom: 30}}>
                 <span style={{width: 150}}>
                 新增 OKR

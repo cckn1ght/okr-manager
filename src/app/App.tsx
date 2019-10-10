@@ -21,6 +21,7 @@ import {OkrView} from "../okr_view";
 import {OkrAdder} from "../okr_view/OkrAdder";
 import {PrivateRoute} from "../common/PrivateRoute";
 import {UserList} from "../user/user_list/UserList";
+import {OkrModifier} from "../okr_view/OkrModifier";
 
 const {Content} = Layout;
 
@@ -93,22 +94,28 @@ const App: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
                         <PrivateRoute exact path="/" authenticated={isAuthenticated}>
                             {
                                 currentUser &&
-                                <Redirect to={`/okr/${currentUser.id}`}/>
+                                <Redirect to={`/user/${currentUser.id}/okr`}/>
                             }
                         </PrivateRoute>
-                        <PrivateRoute exact path="/okr/:user_id" authenticated={isAuthenticated}>
+                        <PrivateRoute exact path="/user/:user_id/okr" authenticated={isAuthenticated}>
                             {
                                 currentUser &&
                                 <OkrView currentUser={currentUser} />
                             }
                         </PrivateRoute>
-                        <PrivateRoute exact path="/okr_adder" authenticated={isAuthenticated}>
+                        <PrivateRoute exact path="/user/okr_adder" authenticated={isAuthenticated}>
                             {
                                 currentUser &&
                                 <OkrAdder currentUser={currentUser}/>
                             }
                         </PrivateRoute>
-                        <PrivateRoute exact path="/user_list/:page" authenticated={isAuthenticated}>
+                        <PrivateRoute exact path="/user/okr_modifier/:okr_id" authenticated={isAuthenticated}>
+                            {
+                                currentUser &&
+                                <OkrModifier currentUser={currentUser} />
+                            }
+                        </PrivateRoute>
+                        <PrivateRoute exact path="/user_list" authenticated={isAuthenticated}>
                             <UserList />
                         </PrivateRoute>
                         <Route path="/login">

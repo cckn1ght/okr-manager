@@ -34,12 +34,12 @@ const AppHeader: React.FC<RouteComponentProps & AppHeaderProps> =
         if (currentUser) {
             items = [
                 <Menu.Item key="/">
-                    <Link to="/">
+                    <Link to={`/user/${currentUser.id}/okr`}>
                         <Icon type="home" className="nav-icon"/>
                     </Link>
                 </Menu.Item>,
                 <Menu.Item key="/user_list">
-                    <Link to="/user_list/1">
+                    <Link to="/user_list">
                         <Icon type="usergroup-delete" className="nav-icon" />
                     </Link>
                 </Menu.Item>,
@@ -62,12 +62,13 @@ const AppHeader: React.FC<RouteComponentProps & AppHeaderProps> =
         return items;
     };
     return (
-        <Header className="app-header">
+        <Header className="app-header" style={{backgroundColor: "white"}}>
             <div className="container">
                 <div className="app-title">
                     <Link to="/">OKR Manager</Link>
                 </div>
                 <Menu
+                    theme="light"
                     className="app-menu"
                     mode="horizontal"
                     selectedKeys={[props.location.pathname]}

@@ -28,7 +28,7 @@ const UserListWithRouter: React.FC = () => {
             const filterUsers = _.filter<UserEntity>(users,
                 (u) => u.name.indexOf(value) !== -1 || u.username.indexOf(value) !== -1);
             setVisibleUsers(filterUsers);
-        }, 500)()
+        }, 200)()
     };
     return (
         <div>
@@ -39,10 +39,10 @@ const UserListWithRouter: React.FC = () => {
                 style={{maxWidth: 1000, margin: "auto", marginTop: 30, marginBottom: 50}}
             >
                 <Search
-                    placeholder="input search text"
+                    placeholder="搜索用户名或邮箱"
                     // onSearch={value => onSearch(value)}
                     onChange={e => onSearch(e.target.value)}
-                    style={{ width: 200, marginBottom: 30 }}
+                    style={{ width: 400, marginBottom: 30 }}
                 />
                 <List
                     bordered
@@ -54,6 +54,7 @@ const UserListWithRouter: React.FC = () => {
                         pageSize: PAGE_SIZE,
                         total: users.length + 1
                     }}
+                    style={{backgroundColor: "white"}}
                     renderItem={item => (
                         <List.Item key={item.id} >
                             <Skeleton avatar title={false} loading={loading} active>
